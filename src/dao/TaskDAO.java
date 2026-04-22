@@ -70,7 +70,7 @@ public class TaskDAO {
         }
     }
 
-    // 🔹 4. GET TASKS BY USER
+
     public List<Task> findByUser(int userId) {
         List<Task> tasks = new ArrayList<>();
 
