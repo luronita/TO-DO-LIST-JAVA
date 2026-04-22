@@ -12,8 +12,6 @@ public class Task {
     private String status;
     private User user;
 
-    public Task() {}
-
     public Task(int id, String title, String description,
                 LocalDateTime creationDate, LocalDateTime dueDate,
                 String status, User user) {
