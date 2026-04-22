@@ -24,11 +24,9 @@ public class UserDAO {
             return rowsInserted > 0;
 
         } catch (SQLException e) {
-            System.out.println("Error while saving user:");
             e.printStackTrace();
             return false;
         } catch (Exception e) {
-            System.out.println("Unexpected error:");
             e.printStackTrace();
             return false;
         }
@@ -54,10 +52,8 @@ public class UserDAO {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error while finding user by email:");
             e.printStackTrace();
         } catch (Exception e) {
-            System.out.println("Unexpected error:");
             e.printStackTrace();
         }
 
