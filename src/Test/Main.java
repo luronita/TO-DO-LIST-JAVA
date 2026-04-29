@@ -1,62 +1,74 @@
 package Test;
 
-import dao.UserDAO;
-import dao.TaskDAO;
-import model.User;
+import controller.AuthController;
+import controller.TaskController;
 import model.Task;
+import model.User;
+import view.LoginView;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class Main {
+
     public static void main(String[] args) {
 
-        UserDAO userDAO = new UserDAO();
-        TaskDAO taskDAO = new TaskDAO();
+        AuthController authController = new AuthController();
 
-        // 🔹 1. CREATE USER
-        User user = new User();
-        user.setName("TestUser");
-        user.setEmail("testuser@mail.com");
-        user.setPassword("1234");
+        boolean registered = authController.register(
+                "TestUser2",
+                "testuser2@gmail.com",
+                "1234"
+        );
 
-        boolean saved = userDAO.save(user);
-
-        if (saved) {
-            System.out.println("User saved successfully");
+        if (registered) {
+            System.out.println("User registered successfully");
         } else {
-            System.out.println("User save failed");
+            System.out.println("Registration failed");
         }
 
-        // 🔹 2. FETCH USER FROM DB
-        User dbUser = userDAO.findByEmail("testuser@mail.com");
+        User user = authController.login(
+                "testuser2@gmail.com",
+                "1234"
+        );
 
-        if (dbUser == null) {
-            System.out.println("User not found");
+        if (user != null) {
+            System.out.println("Login successful: " + user.getName());
+        } else {
+            System.out.println("Login failed");
             return;
         }
 
-        System.out.println("User found: " + dbUser.getName());
+        TaskController taskController = new TaskController();
 
-        // 🔹 3. CREATE TASK FOR THIS USER
         Task task = new Task();
-        task.setTitle("Full test task");
-        task.setDescription("Testing DAO flow");
+        task.setTitle("Finish Java Project");
+        task.setDescription("Complete MVC application");
         task.setCreationDate(LocalDateTime.now());
-        task.setDueDate(LocalDateTime.now().plusDays(2));
+        task.setDueDate(LocalDateTime.now().plusDays(3));
         task.setStatus("TODO");
-        task.setUser(dbUser); // IMPORTANT
+        task.setUser(user);
 
-        taskDAO.save(task);
-        System.out.println("Task saved");
+        boolean taskAdded = taskController.addTask(task);
 
-        // 🔹 4. FETCH TASKS FOR USER
-        List<Task> tasks = taskDAO.findByUser(dbUser.getId());
+        if (taskAdded) {
+            System.out.println("Task added successfully");
+        } else {
+            System.out.println("Task creation failed");
+        }
 
-        System.out.println("Tasks for user:");
+        List<Task> tasks = taskController.getTasksByUser(user.getId());
+
+        System.out.println("Tasks for " + user.getName() + ":");
 
         for (Task t : tasks) {
-            System.out.println(t.getTitle() + " | " + t.getStatus());
+            System.out.println(
+                    t.getId() + " | " +
+                            t.getTitle() + " | " +
+                            t.getStatus()
+            );
         }
+
+        new LoginView();
     }
 }

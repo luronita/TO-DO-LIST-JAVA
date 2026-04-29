@@ -26,10 +26,10 @@ public class LoginView extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Layout
+
         setLayout(new GridLayout(4, 2, 10, 10));
 
-        // Components
+
         add(new JLabel("Email:"));
         emailField = new JTextField();
         add(emailField);
@@ -44,7 +44,7 @@ public class LoginView extends JFrame {
         add(loginButton);
         add(registerButton);
 
-        // Action Login
+
         loginButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
@@ -56,7 +56,6 @@ public class LoginView extends JFrame {
                 if (user != null) {
                     JOptionPane.showMessageDialog(null, "Login success: " + user.getName());
 
-                    // ouvrir dashboard
                     //new DashboardView(user);
                     dispose();
 

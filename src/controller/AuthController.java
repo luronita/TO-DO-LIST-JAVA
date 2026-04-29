@@ -54,7 +54,7 @@ public class AuthController {
             return null;
         }
 
-        if (!user.getPassword().equals(password)) {
+        if (!user.getPassword().equals(password.trim())) {
             return null;
         }
 
