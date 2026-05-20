@@ -56,7 +56,7 @@ public class LoginView extends JFrame {
                 if (user != null) {
                     JOptionPane.showMessageDialog(null, "Login success: " + user.getName());
 
-                    //new DashboardView(user);
+                    new DashboardView(user);
                     dispose();
 
                 } else {
@@ -68,7 +68,8 @@ public class LoginView extends JFrame {
         // Action Register
         registerButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //new RegisterView();
+                dispose();
+                new RegisterView();
             }
         });
 
